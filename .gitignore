@@ -1,0 +1,10 @@
+# Backend
+backend/node_modules/
+backend/.env
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
