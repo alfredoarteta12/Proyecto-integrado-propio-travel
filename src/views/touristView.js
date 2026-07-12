@@ -6,7 +6,13 @@ export function TouristView() {
 
             <h2>Tourist Dashboard</h2>
 
-            <div id="touristPlans">
+            <div id="filters"></div>
+
+            <div class="tourist-content">
+
+                <div id="map"></div>
+
+                <div id="promotionsContainer"></div>
 
             </div>
 

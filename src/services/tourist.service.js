@@ -3,7 +3,7 @@
 
 const promotions = [
     {
-        id: "promo_01",
+        id: 1,
         businessName: "Gran Malecón - El Caimán del Río",
         title: "Desayuno Costeño Tradicional + Bici",
         description: "Incluye arepa de huevo con carne desmechada, jugo de corozo y 1 hora de bicicleta.",
@@ -18,7 +18,7 @@ const promotions = [
     },
 
     {
-        id: "promo_02",
+        id: 2 ,
         businessName: "La Troja",
         title: "Combo Rumbero: Entrada + 3 Cervezas",
         description: "Goza de la salsa icónica de Barranquilla con mesa reservada y picada tradicional.",

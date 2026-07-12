@@ -2,7 +2,7 @@ export function PlaceCard(promotion) {
 
     return `
 
-        <article class="place-card">
+        <article class="place-card" data-id="${promotion.id}">
 
             <h3>${promotion.title}</h3>
 
