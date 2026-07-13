@@ -11,9 +11,9 @@ export function navigate(view) {
 
     switch (view) {
 
-        case "home":
-            loadHome();
-            break;
+       case "home":
+    loadHome();
+    break;
 
         case "login":
             app.innerHTML = LoginView();

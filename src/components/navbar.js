@@ -2,23 +2,25 @@ export function Navbar() {
 
     return `
 
-        <nav class="main-nav">
+        <nav class="navbar">
 
-            <div class="logo">
+            <div class="navbar-logo">
 
-                El Propio Travel
-
-            </div>
-
-            <div class="nav-links">
-
-                <button>Inicio</button>
-
-                <button>Explorar</button>
-
-                <button>Negocios</button>
+                🌴 El Propio Travel
 
             </div>
+
+            <ul class="navbar-menu">
+
+                <li><a href="#" data-view="home">sobre nosotros</a></li>
+
+                <li><a href="#" data-view="tourist">Explorar</a></li>
+
+                <li><a href="#" data-view="business">Negocios</a></li>
+
+                <li><a href="#" data-view="login">Iniciar sesión</a></li>
+
+            </ul>
 
         </nav>
 

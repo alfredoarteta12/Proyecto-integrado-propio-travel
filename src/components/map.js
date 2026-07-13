@@ -1,20 +1,28 @@
+
+
 let map;
 let currentMarker;
 
 export function initializeMap() {
 
-    if (map) return;
+    if (map) {
+
+        map.remove();
+
+        map = null;
+
+    }
 
     map = L.map("map").setView([10.9685, -74.7813], 13);
 
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-
-        attribution: "&copy; OpenStreetMap contributors"
-
-    }).addTo(map);
+    L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+            attribution: "&copy; OpenStreetMap contributors"
+        }
+    ).addTo(map);
 
 }
-
 export function showLocation(promotion) {
 
     if (!map) return;

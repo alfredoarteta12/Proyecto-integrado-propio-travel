@@ -1,34 +1,74 @@
+import { Navbar } from "../components/navbar.js";
+import { Footer } from "../components/footer.js";
+
 export function LoginView() {
 
     return `
 
-        <section class="login-container">
+        ${Navbar()}
 
-            <h2>Login</h2>
+        <main class="login-page">
 
-            <form id="loginForm">
+            <section class="login-container">
 
-                <input
-                    type="email"
-                    placeholder="Email"
-                    required
-                >
+                <div class="login-banner">
 
-                <input
-                    type="password"
-                    placeholder="Password"
-                    required
-                >
+                    <div class="login-overlay">
 
-                <button type="submit">
+                        <h2>🌴 El Propio Travel</h2>
 
-                    Sign In
+                        <p>
+                            Administra tus promociones y conecta tu negocio
+                            con miles de turistas que visitan Barranquilla.
+                        </p>
 
-                </button>
+                    </div>
 
-            </form>
+                </div>
 
-        </section>
+                <div class="login-card">
+
+                    <h2>Iniciar sesión</h2>
+
+                    <p>Bienvenido nuevamente.</p>
+
+                    <form id="loginForm">
+
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="Correo electrónico"
+                            required
+                        >
+
+                        <div class="password-container">
+
+                            <input
+                                type="password"
+                                id="password"
+                                placeholder="Contraseña"
+                                required
+                            >
+
+                            <span id="togglePassword">👁</span>
+
+                        </div>
+
+                        <button type="submit">
+
+                            Iniciar sesión
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </section>
+
+        </main>
+
+        ${Footer()}
 
     `;
 

@@ -1,33 +1,37 @@
+import { HeroSlider } from "../components/HeroSlider.js";
 import { Filter } from "../components/filter.js";
+import { Navbar } from "../components/navbar.js";
 
 export function TouristView() {
 
     return `
 
+            ${Navbar()}      
+
+
         <section class="tourist-dashboard">
 
-            <header class="dashboard-header">
-
-                <h1>🌴 El Propio Travel</h1>
-
-                <p>
-                
-
-¡Descubre Barranquilla como un verdadero quillero!
-
-Encuentra restaurantes, planes, playas,
-vida nocturna y experiencias únicas.
-                </p>
-
-            </header>
+            ${HeroSlider()}
 
             ${Filter()}
 
             <div class="tourist-content">
 
-                <div id="map"></div>
+                <div class="map-section">
 
-                <div id="promotionsContainer"></div>
+                    <h2>🗺️ Explora el mapa</h2>
+
+                    <div id="map"></div>
+
+                </div>
+
+                <div class="cards-section">
+
+                    <h2>🌴 Planes recomendados</h2>
+
+                    <div id="promotionsContainer"></div>
+
+                </div>
 
             </div>
 

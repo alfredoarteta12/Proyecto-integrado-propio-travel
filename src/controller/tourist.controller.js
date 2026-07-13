@@ -2,14 +2,21 @@ import { TouristView } from "../views/touristView.js";
 import { getPromotions } from "../services/tourist.service.js";
 import { PlaceCard } from "../components/placecard.js";
 import { initializeMap, showLocation } from "../components/map.js";
+import { HeroSlider, initializeHeroSlider } from "../components/HeroSlider.js";
 
 export async function loadTouristView() {
 
     const app = document.getElementById("app");
 
-    app.innerHTML = TouristView();
+   app.innerHTML = TouristView();
+
+initializeHeroSlider();
+
+setTimeout(() => {
 
     initializeMap();
+
+}, 50);
     const scheduleFilter = document.getElementById("scheduleFilter");
     const audienceFilter = document.getElementById("audienceFilter");
 
