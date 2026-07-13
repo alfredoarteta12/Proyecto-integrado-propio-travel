@@ -14,6 +14,7 @@ const promotions = [
             lat: 11.0215,
             lng: -74.7962
         },
+        image: "/public/images/malecon.jpg",
         whatsapp: "https://wa.me"
     },
 
@@ -29,11 +30,15 @@ const promotions = [
             lat: 10.9991,
             lng: -74.8021
         },
+        image: "/public/images/latroja.jpg",
+        
+    
+        
         whatsapp: "https://wa.me"
     },
 
     {
-        id: "promo_03",
+        id: 3,
         businessName: "Cucayo Luna del Río",
         title: "Combo Quillero",
         description: "Picada de butifarra y chorizo con bollo de yuca.",
@@ -44,6 +49,7 @@ const promotions = [
             lat: 11.0127,
             lng: -74.7856
         },
+        image: "/public/images/cucayo.jpg",
         whatsapp: "https://wa.me"
     }
 ];
