@@ -952,6 +952,312 @@ LOGIN
     background:#F4A261;
 
 }
+
+/*==========================
+BUSINESS DASHBOARD
+==========================*/
+
+.business-dashboard{
+
+    padding:40px 0 70px;
+
+}
+
+.business-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:35px;
+
+    flex-wrap:wrap;
+
+    gap:20px;
+
+}
+
+.business-header h1{
+
+    color:var(--primary);
+
+    font-size:2.2rem;
+
+}
+
+.business-header p{
+
+    color:#666;
+
+    margin-top:8px;
+
+}
+
+.logout-btn{
+
+    padding:12px 24px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#F4A261;
+
+    color:white;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.logout-btn:hover{
+
+    transform:translateY(-2px);
+
+    background:#E76F51;
+
+}
+
+/*==========================
+STATISTICS
+==========================*/
+
+.business-stats{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:25px;
+
+    margin-bottom:40px;
+
+}
+
+.stat-card{
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:30px;
+
+    text-align:center;
+
+    box-shadow:var(--shadow);
+
+}
+
+.stat-card h3{
+
+    color:#666;
+
+    margin-bottom:10px;
+
+}
+
+.stat-card span{
+
+    font-size:2rem;
+
+    font-weight:bold;
+
+    color:var(--primary);
+
+}
+
+/*==========================
+CONTENT
+==========================*/
+
+.business-content{
+
+    display:grid;
+
+    grid-template-columns:390px 1fr;
+
+    gap:35px;
+
+    align-items:start;
+
+}
+
+/*==========================
+FORM
+==========================*/
+
+.promotion-form{
+
+    background:white;
+
+    padding:30px;
+
+    border-radius:20px;
+
+    box-shadow:var(--shadow);
+
+}
+
+.promotion-form h2{
+
+    color:var(--primary);
+
+    margin-bottom:25px;
+
+}
+
+#promotionForm{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+}
+
+#promotionForm input,
+#promotionForm textarea,
+#promotionForm select{
+
+    width:100%;
+
+    padding:14px;
+
+    border:1px solid #ddd;
+
+    border-radius:12px;
+
+    font-size:1rem;
+
+    outline:none;
+
+}
+
+#promotionForm textarea{
+
+    resize:none;
+
+}
+
+.form-row{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:15px;
+
+}
+
+.location-btn{
+
+    background:#0F4C81;
+
+    color:white;
+
+    border:none;
+
+    border-radius:12px;
+
+    padding:14px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.location-btn:hover{
+
+    background:#1A659E;
+
+}
+
+.save-btn{
+
+    background:#F4A261;
+
+    color:white;
+
+    border:none;
+
+    border-radius:12px;
+
+    padding:16px;
+
+    font-size:1rem;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.save-btn:hover{
+
+    background:#E76F51;
+
+}
+
+/*==========================
+PROMOTIONS
+==========================*/
+
+.business-promotions{
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:30px;
+
+    box-shadow:var(--shadow);
+
+}
+
+.promotion-header{
+
+    margin-bottom:25px;
+
+}
+
+.promotion-header h2{
+
+    color:var(--primary);
+
+}
+
+.promotion-list{
+
+    display:grid;
+
+    gap:20px;
+
+}
+
+/*==========================
+RESPONSIVE
+==========================*/
+
+@media(max-width:992px){
+
+    .business-content{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+
 @media(max-width:850px){
 
     .tourist-content{
@@ -974,6 +1280,25 @@ LOGIN
     .login-banner{
 
         display:none;
+
+    }
+     .business-header{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+    }
+
+    .business-stats{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .form-row{
+
+        grid-template-columns:1fr;
 
     }
     
