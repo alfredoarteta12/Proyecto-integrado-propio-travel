@@ -1,5 +1,6 @@
 import { Navbar } from "../components/navbar.js";
 import { Footer } from "../components/footer.js";
+import { Plancard } from "../components/plancard.js";
 
 export function BusinessView() {
 
@@ -162,5 +163,4 @@ export function BusinessView() {
         ${Footer()}
 
     `;
-
 }
