@@ -1,5 +1,5 @@
 import { RegisterView } from "../views/registerView.js";
-import {register,getUsers,login as loginUser} from "../services/auth.service.js";
+import { register, getUsers, getUserByEmail, login as loginUser } from "../services/auth.service.js";
 import { navigate } from "../router/router.js";
 import { LoginView } from "../views/loginView.js";
 
@@ -15,46 +15,74 @@ export function loadRegister() {
 
         event.preventDefault();
 
-       const inputs = form.elements;
+        const inputs = form.elements;
 
-const user = {
+        const user = {
 
-    businessName: inputs[0].value,
+            businessName: inputs[0].value.trim(),
 
-    email: inputs[1].value,
+            email: inputs[1].value.trim().toLowerCase(),
 
-    phone: inputs[2].value,
+            phone: inputs[2].value.trim(),
 
-    password: inputs[3].value,
+            password: inputs[3].value,
 
-    confirmPassword: inputs[4].value
+            confirmPassword: inputs[4].value
 
-};
+        };
 
-if (user.password !== user.confirmPassword) {
+        if (user.password !== user.confirmPassword) {
 
-    alert("Las contraseñas no coinciden.");
+            alert("Las contraseñas no coinciden.");
 
-    return;
+            return;
 
-}
-const newUser = {
+        }
+        if (user.password.length < 8) {
 
-    businessName: user.businessName,
+            alert("La contraseña debe tener al menos 8 caracteres.");
 
-    email: user.email,
+            return;
 
-    phone: user.phone,
+        }
+        if (!/^[0-9]{10}$/.test(user.phone)) {
 
-    password: user.password
+            alert("El número de WhatsApp debe tener exactamente 10 dígitos.");
 
-};
+            return;
 
-register(newUser);
+        }
+        if (getUserByEmail(user.email)) {
 
-alert("Cuenta creada correctamente.");
+            alert("Ya existe un negocio registrado con ese correo.");
 
-navigate("login");
+            return;
+
+        }
+        if (user.businessName.length < 3) {
+
+            alert("El nombre del negocio debe tener al menos 3 caracteres.");
+
+            return;
+
+        }
+        const newUser = {
+
+            businessName: user.businessName,
+
+            email: user.email,
+
+            phone: user.phone,
+
+            password: user.password
+
+        };
+
+        register(newUser);
+
+        alert("Cuenta creada correctamente.");
+
+        navigate("login");
     });
 
 }
@@ -70,23 +98,23 @@ export function loadLogin() {
 
         event.preventDefault();
 
-      const inputs = form.elements;
+        const inputs = form.elements;
 
-const email = inputs[0].value;
+        const email = inputs[0].value;
 
-const password = inputs[1].value;
+        const password = inputs[1].value;
 
-const result = await loginUser(email, password);
+        const result = await loginUser(email, password);
 
-if (result.success) {
+        if (result.success) {
 
-    navigate("business");
+            navigate("business");
 
-} else {
+        } else {
 
-    alert("Correo o contraseña incorrectos.");
+            alert("Correo o contraseña incorrectos.");
 
-}
+        }
 
     });
 

@@ -1,12 +1,6 @@
 import { BusinessView } from "../views/businessView.js";
 import { Plancard } from "../components/plancard.js";
-import {
-    getPromotions,
-    getPromotionById,
-    addPromotion,
-    updatePromotion,
-    deletePromotion
-} from "../services/promotion.service.js";
+import {getPromotions,getPromotionById,addPromotion,updatePromotion,deletePromotion} from "../services/promotion.service.js";
 import { logout } from "../services/auth.service.js";
 import { navigate } from "../router/router.js";
 
