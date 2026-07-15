@@ -1,23 +1,82 @@
+let users = [];
+
+let currentUser = null;
+
+/**
+ * Registrar un nuevo negocio
+ */
+export function register(user) {
+
+    users.push(user);
+
+}
+
+/**
+ * Obtener todos los usuarios registrados
+ */
+export function getUsers() {
+
+    return users;
+
+}
+
+/**
+ * Buscar un usuario por correo
+ */
+export function getUserByEmail(email) {
+
+    return users.find(
+
+        user => user.email === email
+
+    );
+
+}
+
+/**
+ * Iniciar sesión
+ */
 export async function login(email, password) {
 
-    return new Promise((resolve) => {
+    const user = users.find(
 
-        setTimeout(() => {
+        user =>
 
-            resolve({
+            user.email === email &&
+            user.password === password
 
-                success: true,
+    );
 
-                user: {
+    if (user) {
 
-                    email
+        currentUser = user;
 
-                }
+    }
 
-            });
+    return {
 
-        }, 300);
+        success: !!user,
 
-    });
+        user
+
+    };
+
+}
+
+/**
+ * Obtener el usuario autenticado
+ */
+export function getCurrentUser() {
+
+    return currentUser;
+
+}
+
+/**
+ * Cerrar sesión
+ */
+export function logout() {
+
+    currentUser = null;
 
 }

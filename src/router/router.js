@@ -4,6 +4,9 @@ import { TouristView } from "../views/touristView.js";
 import { BusinessView } from "../views/businessView.js";
 import { loadTouristView } from "../controller/tourist.controller.js";
 import { loadBusinessView } from "../controller/business.controller.js";
+import { RegisterView } from "../views/registerView.js";
+import { loadRegister,loadLogin } from "../controller/auth.controller.js";
+
 
 const app = document.getElementById("app");
 
@@ -15,11 +18,15 @@ export function navigate(view) {
     loadHome();
     break;
 
-        case "login":
-            app.innerHTML = LoginView();
-            break;
+    case "login":
+    loadLogin();
+    break;
 
-        case "tourist":
+   case "register":
+    loadRegister();
+    break;
+
+    case "tourist":
     loadTouristView();
     break;
         case "business":

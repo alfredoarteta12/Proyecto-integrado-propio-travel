@@ -61,8 +61,22 @@ export function LoginView() {
                         </button>
 
                     </form>
+                    
+        <div class="register-link">
 
-                </div>
+            <p>
+
+                ¿No tienes una cuenta?
+
+                <a href="#" data-view="register">
+
+                    Regístrate aquí
+
+                </a>
+
+            </p>
+
+                        </div>
 
             </section>
 

@@ -7,6 +7,8 @@ import {
     updatePromotion,
     deletePromotion
 } from "../services/promotion.service.js";
+import { logout } from "../services/auth.service.js";
+import { navigate } from "../router/router.js";
 
 export function loadBusinessView() {
 
@@ -38,6 +40,15 @@ export function loadBusinessView() {
     const container = document.getElementById("businessPromotionsContainer");
 
     const form = document.getElementById("promotionForm");
+    const logoutButton = document.querySelector(".logout-btn");
+
+logoutButton.addEventListener("click", () => {
+
+    logout();
+
+    navigate("login");
+
+});
 
     container.addEventListener("click", (event) => {
 
