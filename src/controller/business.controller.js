@@ -1,129 +1,197 @@
 import { BusinessView } from "../views/businessView.js";
 import { Plancard } from "../components/plancard.js";
-import {getPromotions,getPromotionById,addPromotion,updatePromotion,deletePromotion} from "../services/promotion.service.js";
-import { logout } from "../services/auth.service.js";
+
+import {
+    getActivities,
+    getJourneys,
+    getGroupTypes
+} from "../services/business.service.js";
+
+import {
+    getBusinessPromotions,
+    createPromotion
+} from "../services/promotion.service.js";
+
 import { navigate } from "../router/router.js";
 
-export function loadBusinessView() {
+export async function loadBusinessView() {
 
     const app = document.getElementById("app");
 
     app.innerHTML = BusinessView();
 
-    // Indica si estamos editando una promoción
-    let editingPromotionId = null;
-
-    function renderPromotions() {
-
-        const container = document.getElementById("businessPromotionsContainer");
-
-        container.innerHTML = "";
-
-        const promotions = getPromotions();
-
-        promotions.forEach((promotion) => {
-
-            container.innerHTML += Plancard(promotion);
-
-        });
-
-    }
-
-    renderPromotions();
-
-    const container = document.getElementById("businessPromotionsContainer");
-
-    const form = document.getElementById("promotionForm");
     const logoutButton = document.querySelector(".logout-btn");
 
-logoutButton.addEventListener("click", () => {
+    logoutButton.addEventListener("click", () => {
 
-    logout();
+        localStorage.removeItem("business");
 
-    navigate("login");
+        navigate("login");
 
-});
+    });
 
-    container.addEventListener("click", (event) => {
+    await renderPromotions();
 
-        // Eliminar
-        if (event.target.classList.contains("delete-btn")) {
+    await loadSelects();
 
-            const id = Number(event.target.dataset.id);
+    loadForm();
 
-            deletePromotion(id);
+}
 
-            renderPromotions();
+async function renderPromotions() {
+
+    const container = document.getElementById(
+        "businessPromotionsContainer"
+    );
+
+    container.innerHTML = "";
+
+    try {
+
+        const business = JSON.parse(
+    localStorage.getItem("business")
+);
+
+const response = await getBusinessPromotions(
+    business.business_id
+);
+
+        if (!response.success) {
+
+            container.innerHTML =
+                "<p>No se pudieron cargar las promociones.</p>";
 
             return;
 
         }
 
-        // Editar
-        if (event.target.classList.contains("edit-btn")) {
+        response.data.forEach((promotion) => {
 
-            const id = Number(event.target.dataset.id);
+            container.innerHTML += Plancard(promotion);
 
-            // Guardamos el id para saber que estamos editando
-            editingPromotionId = id;
+        });
 
-            const promotion = getPromotionById(id);
+        document.getElementById("promotionCount").textContent =
+            response.data.length;
 
-            const inputs = form.elements;
+    } catch (error) {
 
-            inputs[0].value = promotion.title;
-            inputs[1].value = promotion.description;
-            inputs[2].value = promotion.price;
-            inputs[3].value = promotion.schedule;
-            inputs[4].value = promotion.audience;
-            inputs[5].value = promotion.image;
+        console.error(error);
 
-        }
+        container.innerHTML =
+            "<p>Error al conectar con el servidor.</p>";
+
+    }
+
+}
+
+async function loadSelects() {
+
+    const activitySelect = document.getElementById("activitySelect");
+    const journeySelect = document.getElementById("journeySelect");
+    const groupTypeSelect = document.getElementById("groupTypeSelect");
+
+    const activities = await getActivities();
+    const journeys = await getJourneys();
+    const groupTypes = await getGroupTypes();
+
+    activities.data.forEach((activity) => {
+
+        activitySelect.innerHTML += `
+            <option value="${activity.activity_id}">
+                ${activity.activity_name}
+            </option>
+        `;
 
     });
 
-    form.addEventListener("submit", (event) => {
+    journeys.data.forEach((journey) => {
+
+        journeySelect.innerHTML += `
+            <option value="${journey.journey_id}">
+                ${journey.journey_name}
+            </option>
+        `;
+
+    });
+
+    groupTypes.data.forEach((group) => {
+
+        groupTypeSelect.innerHTML += `
+            <option value="${group.group_type_id}">
+                ${group.group_name}
+            </option>
+        `;
+
+    });
+
+}
+
+function loadForm() {
+
+    const form = document.getElementById("promotionForm");
+
+    form.addEventListener("submit", async (event) => {
 
         event.preventDefault();
 
-        const inputs = form.elements;
+        const business = JSON.parse(
+            localStorage.getItem("business")
+        );
 
         const promotion = {
 
-            id: Date.now(),
+            business_id: business.business_id,
 
-            title: inputs[0].value,
+            title: document.getElementById("title").value.trim(),
 
-            description: inputs[1].value,
+            description: document.getElementById("description").value.trim(),
 
-            price: Number(inputs[2].value),
+            price: Number(
+                document.getElementById("price").value
+            ),
 
-            schedule: inputs[3].value,
+            activity_id: Number(
+                document.getElementById("activitySelect").value
+            ),
 
-            audience: inputs[4].value,
+            journey_id: Number(
+                document.getElementById("journeySelect").value
+            ),
 
-            image: inputs[5].value
+            group_type_id: Number(
+                document.getElementById("groupTypeSelect").value
+            ),
+
+            image: document.getElementById("image").value.trim()
 
         };
 
-        // Si estamos editando
-        if (editingPromotionId !== null) {
+        try {
 
-            promotion.id = editingPromotionId;
+            const response = await createPromotion(promotion);
 
-            updatePromotion(promotion);
+            if (response.success) {
 
-            editingPromotionId = null;
+                alert("Promoción creada correctamente.");
 
-        } else {
+                form.reset();
 
-            addPromotion(promotion);
+                await renderPromotions();
+
+            } else {
+
+                alert(response.message);
+
+            }
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert("Error al crear la promoción.");
 
         }
-
-        renderPromotions();
-
-        form.reset();
 
     });
 

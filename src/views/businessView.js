@@ -1,6 +1,5 @@
 import { Navbar } from "../components/navbar.js";
 import { Footer } from "../components/footer.js";
-import { Plancard } from "../components/plancard.js";
 
 export function BusinessView() {
 
@@ -34,7 +33,7 @@ export function BusinessView() {
 
                     <h3>Promociones</h3>
 
-                    <span>3</span>
+                    <span id="promotionCount">0</span>
 
                 </div>
 
@@ -42,7 +41,7 @@ export function BusinessView() {
 
                     <h3>Reservas</h3>
 
-                    <span>12</span>
+                    <span>0</span>
 
                 </div>
 
@@ -50,7 +49,7 @@ export function BusinessView() {
 
                     <h3>Visitas</h3>
 
-                    <span>120</span>
+                    <span>0</span>
 
                 </div>
 
@@ -65,64 +64,60 @@ export function BusinessView() {
                     <form id="promotionForm">
 
                         <input
+                            id="title"
                             type="text"
                             placeholder="Título de la promoción"
                             required
                         >
 
                         <textarea
+                            id="description"
                             placeholder="Descripción de la promoción"
                             rows="4"
                             required
                         ></textarea>
 
                         <input
+                            id="price"
                             type="number"
                             placeholder="Precio"
                             required
                         >
 
+                        <select id="activitySelect" required>
+
+                            <option value="">
+                                Seleccione una actividad
+                            </option>
+
+                        </select>
+
                         <div class="form-row">
 
-                            <select required>
+                            <select id="journeySelect" required>
 
-                                <option value="">Horario</option>
-
-                                <option>Mañana</option>
-
-                                <option>Tarde</option>
-
-                                <option>Noche</option>
+                                <option value="">
+                                    Seleccione una jornada
+                                </option>
 
                             </select>
 
-                            <select required>
+                            <select id="groupTypeSelect" required>
 
-                                <option value="">Público objetivo</option>
-
-                                <option>Familiar</option>
-
-                                <option>Parejas</option>
-
-                                <option>Amigos</option>
+                                <option value="">
+                                    Seleccione un tipo de grupo
+                                </option>
 
                             </select>
 
                         </div>
 
                         <input
+                            id="image"
                             type="text"
                             placeholder="URL de la imagen"
+                            required
                         >
-
-                        <button
-                            type="button"
-                            class="location-btn"
-                        >
-
-                            📍 Seleccionar ubicación
-
-                        </button>
 
                         <button
                             type="submit"
@@ -150,8 +145,6 @@ export function BusinessView() {
                         id="businessPromotionsContainer"
                     >
 
-                        <!-- Aquí se mostrarán las promociones -->
-
                     </div>
 
                 </section>
@@ -163,4 +156,5 @@ export function BusinessView() {
         ${Footer()}
 
     `;
+
 }

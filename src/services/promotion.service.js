@@ -1,77 +1,31 @@
-let promotions = [
+import { API } from "../api/endpoints.js";
+import { request } from "../api/http.js";
 
-    {
+// Obtener todas las promociones (Turistas)
+export async function getPromotions() {
 
-        id: 1,
-
-        title: "Tour por el Malecón",
-
-        description: "Disfruta de un recorrido por el Gran Malecón del Río.",
-
-        price: 45000,
-
-        schedule: "Mañana",
-
-        audience: "Familiar",
-
-        image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800"
-
-    }
-
-];
-export function getPromotions() {
-
-    return promotions;
+    return await request(API.PROMOTIONS);
 
 }
-/**
- * Obtener una promoción por su id
- */
-export function getPromotionById(id) {
 
-    return promotions.find(
+// Obtener promociones de un negocio (Dashboard)
+export async function getBusinessPromotions(businessId) {
 
-        promotion => promotion.id === id
-
+    return await request(
+        `${API.PROMOTIONS}/business/${businessId}`
     );
 
 }
 
-/**
- * Agregar una nueva promoción
- */
-export function addPromotion(promotion) {
+// Crear promoción
+export async function createPromotion(promotion) {
 
-    promotions.push(promotion);
+    return await request(API.PROMOTIONS, {
 
-}
+        method: "POST",
 
-/**
- * Eliminar una promoción
- */
-export function deletePromotion(id) {
+        body: JSON.stringify(promotion)
 
-    promotions = promotions.filter(
-
-        promotion => promotion.id !== id
-
-    );
-
-}
-
-/**
- * Actualizar una promoción
- */
-export function updatePromotion(updatedPromotion) {
-
-    promotions = promotions.map(promotion =>
-
-        promotion.id === updatedPromotion.id
-
-            ? updatedPromotion
-
-            : promotion
-
-    );
+    });
 
 }

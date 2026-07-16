@@ -1,22 +1,20 @@
 const express = require("express");
+
 const router = express.Router();
 
 const {
-    getAllPromotions,
-    getPromotionById,
     createPromotion,
-    updatePromotion,
-    deletePromotion
+    getPromotions,
+    getBusinessPromotions
 } = require("../controller/promotionController");
 
-router.get("/", getAllPromotions);
+// Obtener todas las promociones (Turistas)
+router.get("/", getPromotions);
 
-router.get("/:id", getPromotionById);
+// Obtener promociones de un negocio (Dashboard)
+router.get("/business/:id", getBusinessPromotions);
 
+// Crear promoción
 router.post("/", createPromotion);
-
-router.put("/:id", updatePromotion);
-
-router.delete("/:id", deletePromotion);
 
 module.exports = router;

@@ -1,33 +1,14 @@
-const businesses = [
+import { API } from "../api/endpoints.js";
+import { request } from "../api/http.js";
 
-    {
-        id: 1,
-        name: "La Troja",
-        category: "Restaurant",
-        location: "Barranquilla",
-        phone: "3001234567"
-    },
+export async function getActivities() {
+    return await request(API.ACTIVITIES);
+}
 
-    {
-        id: 2,
-        name: "Gran Malecón",
-        category: "Tourist Attraction",
-        location: "Barranquilla",
-        phone: "3009876543"
-    }
+export async function getJourneys() {
+    return await request(API.JOURNEYS);
+}
 
-];
-
-export async function getBusinesses() {
-
-    return new Promise((resolve) => {
-
-        setTimeout(() => {
-
-            resolve(businesses);
-
-        }, 300);
-
-    });
-
+export async function getGroupTypes() {
+    return await request(API.GROUP_TYPES);
 }

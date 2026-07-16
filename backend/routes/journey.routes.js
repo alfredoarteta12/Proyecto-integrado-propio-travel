@@ -1,10 +1,11 @@
 const express = require("express");
+
 const router = express.Router();
 
 const {
-    getAllJourneys
+    getJourneys
 } = require("../controller/journeyController");
 
-router.get("/", getAllJourneys);
+router.get("/", getJourneys);
 
 module.exports = router;

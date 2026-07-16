@@ -1,27 +1,85 @@
-const getAllPromotions = async (req, res) => {
+const Promotion = require("../models/Promotion");
 
-};
-
-const getPromotionById = async (req, res) => {
-
-};
-
+// Crear promoción
 const createPromotion = async (req, res) => {
 
+    try {
+
+        const promotion = await Promotion.createPromotion(req.body);
+
+        res.status(201).json({
+            success: true,
+            message: "Promoción creada correctamente.",
+            data: promotion
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        res.status(500).json({
+            success: false,
+            message: "Error al crear la promoción."
+        });
+
+    }
+
 };
 
-const updatePromotion = async (req, res) => {
+// Obtener todas las promociones (Turista)
+const getPromotions = async (req, res) => {
+
+    try {
+
+        const promotions = await Promotion.getPromotions();
+
+        res.status(200).json({
+            success: true,
+            data: promotions
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        res.status(500).json({
+            success: false,
+            message: "Error al obtener las promociones."
+        });
+
+    }
 
 };
 
-const deletePromotion = async (req, res) => {
+// Obtener promociones de un negocio (Dashboard)
+const getBusinessPromotions = async (req, res) => {
+
+    try {
+
+        const { id } = req.params;
+
+        const promotions = await Promotion.getPromotionsByBusiness(id);
+
+        res.status(200).json({
+            success: true,
+            data: promotions
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        res.status(500).json({
+            success: false,
+            message: "Error al obtener las promociones del negocio."
+        });
+
+    }
 
 };
 
 module.exports = {
-    getAllPromotions,
-    getPromotionById,
     createPromotion,
-    updatePromotion,
-    deletePromotion
+    getPromotions,
+    getBusinessPromotions
 };

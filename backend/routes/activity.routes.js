@@ -2,9 +2,9 @@ const express = require("express");
 const router = express.Router();
 
 const {
-    getAllActivities
+    getActivities
 } = require("../controller/activityController");
 
-router.get("/", getAllActivities);
+router.get("/", getActivities);
 
 module.exports = router;

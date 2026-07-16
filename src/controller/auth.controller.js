@@ -1,5 +1,8 @@
 import { RegisterView } from "../views/registerView.js";
-import { register, getUsers, getUserByEmail, login as loginUser } from "../services/auth.service.js";
+import {
+    register,
+    login as loginUser
+} from "../services/auth.service.js";
 import { navigate } from "../router/router.js";
 import { LoginView } from "../views/loginView.js";
 
@@ -11,7 +14,7 @@ export function loadRegister() {
 
     const form = document.getElementById("registerForm");
 
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
 
         event.preventDefault();
 
@@ -38,6 +41,7 @@ export function loadRegister() {
             return;
 
         }
+
         if (user.password.length < 8) {
 
             alert("La contraseña debe tener al menos 8 caracteres.");
@@ -45,6 +49,7 @@ export function loadRegister() {
             return;
 
         }
+
         if (!/^[0-9]{10}$/.test(user.phone)) {
 
             alert("El número de WhatsApp debe tener exactamente 10 dígitos.");
@@ -52,13 +57,7 @@ export function loadRegister() {
             return;
 
         }
-        if (getUserByEmail(user.email)) {
 
-            alert("Ya existe un negocio registrado con ese correo.");
-
-            return;
-
-        }
         if (user.businessName.length < 3) {
 
             alert("El nombre del negocio debe tener al menos 3 caracteres.");
@@ -66,9 +65,10 @@ export function loadRegister() {
             return;
 
         }
-        const newUser = {
 
-            businessName: user.businessName,
+        const result = await register({
+
+            business_name: user.businessName,
 
             email: user.email,
 
@@ -76,16 +76,24 @@ export function loadRegister() {
 
             password: user.password
 
-        };
+        });
 
-        register(newUser);
+        if (result.success) {
 
-        alert("Cuenta creada correctamente.");
+            alert(result.message);
 
-        navigate("login");
+            navigate("login");
+
+        } else {
+
+            alert(result.message);
+
+        }
+
     });
 
 }
+
 export function loadLogin() {
 
     const app = document.getElementById("app");
@@ -100,7 +108,7 @@ export function loadLogin() {
 
         const inputs = form.elements;
 
-        const email = inputs[0].value;
+        const email = inputs[0].value.trim().toLowerCase();
 
         const password = inputs[1].value;
 
@@ -108,11 +116,19 @@ export function loadLogin() {
 
         if (result.success) {
 
+            // Guardar el negocio que inició sesión
+            localStorage.setItem(
+                "business",
+                JSON.stringify(result.data)
+            );
+
+            alert(result.message);
+
             navigate("business");
 
         } else {
 
-            alert("Correo o contraseña incorrectos.");
+            alert(result.message);
 
         }
 

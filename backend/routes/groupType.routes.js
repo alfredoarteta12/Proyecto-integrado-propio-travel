@@ -1,10 +1,11 @@
 const express = require("express");
+
 const router = express.Router();
 
 const {
-    getAllGroupTypes
+    getGroupTypes
 } = require("../controller/groupTypeController");
 
-router.get("/", getAllGroupTypes);
+router.get("/", getGroupTypes);
 
 module.exports = router;

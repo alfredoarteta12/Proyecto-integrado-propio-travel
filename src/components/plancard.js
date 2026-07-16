@@ -18,30 +18,36 @@ export function Plancard(promotion) {
 
                 <span class="business-price">
 
-                    $${promotion.price.toLocaleString("es-CO")}
+                    $${Number(promotion.price).toLocaleString("es-CO")}
 
                 </span>
 
                 <div class="business-details">
 
-                    <span>🕒 ${promotion.schedule}</span>
+                    <span>🏢 ${promotion.business_name}</span>
 
-                    <span>👨‍👩‍👧 ${promotion.audience}</span>
+                    <span>🎯 ${promotion.activity_name}</span>
+
+                    <span>🕒 ${promotion.journey_name}</span>
+
+                    <span>👨‍👩‍👧 ${promotion.group_name}</span>
 
                 </div>
 
                 <div class="business-actions">
 
-                    <button class="edit-btn" data-id="${promotion.id}">
-
-                     ✏️ Editar
-
+                    <button
+                        class="edit-btn"
+                        data-id="${promotion.promotion_id}"
+                    >
+                        ✏️ Editar
                     </button>
 
-                   <button class="delete-btn"data-id="${promotion.id}">
-
-                    🗑 Eliminar
-
+                    <button
+                        class="delete-btn"
+                        data-id="${promotion.promotion_id}"
+                    >
+                        🗑 Eliminar
                     </button>
 
                 </div>
