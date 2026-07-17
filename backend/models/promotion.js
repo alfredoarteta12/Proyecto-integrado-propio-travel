@@ -64,6 +64,11 @@ class Promotion {
                 p.created_at,
 
                 b.business_name,
+                b.phone,
+
+                l.address,
+                l.latitude,
+                l.longitude,
 
                 a.activity_name,
 
@@ -75,6 +80,9 @@ class Promotion {
 
             INNER JOIN business b
                 ON p.business_id = b.business_id
+
+            INNER JOIN location l
+                ON b.business_id = l.business_id
 
             INNER JOIN activity a
                 ON p.activity_id = a.activity_id
@@ -90,7 +98,14 @@ class Promotion {
 
         const result = await pool.query(query);
 
-        return result.rows;
+        const promotions = result.rows.map((promotion) => ({
+            ...promotion,
+            whatsapp: `https://wa.me/57${promotion.phone}?text=${encodeURIComponent(
+                `Hola, estoy interesado en la promoción "${promotion.title}" que vi en El Propio Travel.`
+            )}`
+        }));
+
+        return promotions;
 
     }
 
@@ -108,6 +123,11 @@ class Promotion {
                 p.created_at,
 
                 b.business_name,
+                b.phone,
+
+                l.address,
+                l.latitude,
+                l.longitude,
 
                 a.activity_name,
 
@@ -119,6 +139,9 @@ class Promotion {
 
             INNER JOIN business b
                 ON p.business_id = b.business_id
+
+            INNER JOIN location l
+                ON b.business_id = l.business_id
 
             INNER JOIN activity a
                 ON p.activity_id = a.activity_id
@@ -136,7 +159,14 @@ class Promotion {
 
         const result = await pool.query(query, [businessId]);
 
-        return result.rows;
+        const promotions = result.rows.map((promotion) => ({
+            ...promotion,
+            whatsapp: `https://wa.me/57${promotion.phone}?text=${encodeURIComponent(
+                `Hola, estoy interesado en la promoción "${promotion.title}" que vi en El Propio Travel.`
+            )}`
+        }));
+
+        return promotions;
 
     }
 

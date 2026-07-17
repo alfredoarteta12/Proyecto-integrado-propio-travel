@@ -2,32 +2,73 @@ import { TouristView } from "../views/touristView.js";
 import { getPromotions } from "../services/tourist.service.js";
 import { PlaceCard } from "../components/placecard.js";
 import { initializeMap, showLocation } from "../components/map.js";
-import { HeroSlider, initializeHeroSlider } from "../components/HeroSlider.js";
+import { initializeHeroSlider } from "../components/HeroSlider.js";
+import {
+    getJourneys,
+    getGroupTypes
+} from "../services/business.service.js";
 
 export async function loadTouristView() {
 
     const app = document.getElementById("app");
 
-   app.innerHTML = TouristView();
+    app.innerHTML = TouristView();
 
-initializeHeroSlider();
+    initializeHeroSlider();
 
-setTimeout(() => {
+    await loadFilters();
 
-    initializeMap();
-
-}, 50);
-
+    setTimeout(() => {
+        initializeMap();
+    }, 50);
 
     const response = await getPromotions();
+    const promotions = response.data;
+    console.log(promotions);
 
-const promotions = response.data;
+    const container = document.getElementById("promotionsContainer");
 
-const container = document.getElementById("promotionsContainer");
+    refreshView(promotions, container);
 
-refreshView(promotions, container);
+    setupFilters(promotions, container);
+}
 
-setupFilters(promotions, container);
+async function loadFilters() {
+
+    const scheduleFilter = document.getElementById("scheduleFilter");
+    const audienceFilter = document.getElementById("audienceFilter");
+
+    const journeys = await getJourneys();
+    const groups = await getGroupTypes();
+
+    scheduleFilter.innerHTML = `
+        <option value="all">Todos</option>
+    `;
+
+    journeys.data.forEach((journey) => {
+
+        scheduleFilter.innerHTML += `
+            <option value="${journey.journey_name}">
+                ${journey.journey_name}
+            </option>
+        `;
+
+    });
+
+    audienceFilter.innerHTML = `
+        <option value="all">Todos</option>
+    `;
+
+    groups.data.forEach((group) => {
+
+        audienceFilter.innerHTML += `
+            <option value="${group.group_name}">
+                ${group.group_name}
+            </option>
+        `;
+
+    });
+
 }
 
 function renderPromotions(promotions, container) {
@@ -40,25 +81,20 @@ function renderPromotions(promotions, container) {
 
     });
 
-} 
+}
+
 function refreshView(promotions, container) {
 
     if (promotions.length === 0) {
 
         container.innerHTML = `
-
             <div class="empty-state">
-
                 <h3>🌴 No encontramos planes disponibles</h3>
-
                 <p>Intenta cambiar los filtros para descubrir más experiencias en Barranquilla.</p>
-
             </div>
-
         `;
 
         return;
-
     }
 
     renderPromotions(promotions, container);
@@ -66,6 +102,7 @@ function refreshView(promotions, container) {
     setupCardEvents(promotions);
 
 }
+
 function setupCardEvents(promotions) {
 
     const cards = document.querySelectorAll(".place-card");
@@ -76,7 +113,9 @@ function setupCardEvents(promotions) {
 
             const id = Number(card.dataset.id);
 
-            const promotion = promotions.find(p => p.id === id);
+            const promotion = promotions.find(
+                p => p.promotion_id === id
+            );
 
             if (promotion) {
                 showLocation(promotion);
@@ -87,6 +126,7 @@ function setupCardEvents(promotions) {
     });
 
 }
+
 function setupFilters(promotions, container) {
 
     const scheduleFilter = document.getElementById("scheduleFilter");
@@ -94,14 +134,13 @@ function setupFilters(promotions, container) {
 
     function updateFilters() {
 
-       const filteredPromotions = applyFilters(promotions);
+        const filteredPromotions = applyFilters(promotions);
 
-refreshView(filteredPromotions, container);
+        refreshView(filteredPromotions, container);
 
     }
 
     scheduleFilter.addEventListener("change", updateFilters);
-
     audienceFilter.addEventListener("change", updateFilters);
 
 }
@@ -115,15 +154,14 @@ function applyFilters(promotions) {
 
         const scheduleMatch =
             schedule === "all" ||
-            promotion.schedule === schedule;
+            promotion.journey_name === schedule;
 
         const audienceMatch =
             audience === "all" ||
-            promotion.audience === audience;
+            promotion.group_name === audience;
 
         return scheduleMatch && audienceMatch;
 
     });
 
 }
-

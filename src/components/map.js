@@ -28,25 +28,24 @@ export function showLocation(promotion) {
     if (!map) return;
 
     map.setView(
-        [promotion.coordinates.lat, promotion.coordinates.lng],
+        [promotion.latitude, promotion.longitude],
         17
     );
 
     if (currentMarker) {
-
         map.removeLayer(currentMarker);
-
     }
 
     currentMarker = L.marker([
-        promotion.coordinates.lat,
-        promotion.coordinates.lng
+        promotion.latitude,
+        promotion.longitude
     ])
         .addTo(map)
         .bindPopup(`
-            <strong>${promotion.businessName}</strong><br>
+            <strong>${promotion.business_name}</strong><br>
             ${promotion.title}<br>
-            $${promotion.price.toLocaleString("es-CO")}
+            $${promotion.price.toLocaleString("es-CO")}<br>
+            ${promotion.address}
         `)
         .openPopup();
 

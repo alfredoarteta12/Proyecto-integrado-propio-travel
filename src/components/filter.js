@@ -11,8 +11,7 @@ export function Filter() {
                 <select id="scheduleFilter">
 
                     <option value="all">Todos</option>
-                    <option value="morning">Mañana</option>
-                    <option value="night">Noche</option>
+                   
 
                 </select>
 
@@ -24,9 +23,8 @@ export function Filter() {
 
                 <select id="audienceFilter">
 
-                    <option value="all">Todos</option>
-                    <option value="family">Familiar</option>
-                    <option value="adults">Adultos</option>
+                    <option value="todos">Todos</option>
+                   
 
                 </select>
 

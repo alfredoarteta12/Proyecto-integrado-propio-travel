@@ -1,29 +1,28 @@
-import { Navbar } from "../components/navbar.js";
-import { Footer } from "../components/footer.js";
+
 
 export function BusinessView() {
 
     return `
 
-        ${Navbar()}
+     
 
         <section class="business-dashboard container">
 
-            <div class="business-header">
+        <div class="business-header">
 
-                <div>
+    <div>
 
-                    <h1>Panel de Negocios</h1>
+        <h1 id="greeting"></h1>
 
-                    <p>Administra tus promociones turísticas desde un solo lugar.</p>
+        <p>Listo para recibir nuevos turistas hoy. 🌴</p>
 
-                </div>
+    </div>
 
-                <button class="logout-btn">
+    <button class="logout-btn">
+        Cerrar sesión
+    </button>
 
-                    Cerrar sesión
-
-                </button>
+</div>
 
             </div>
 
@@ -153,7 +152,7 @@ export function BusinessView() {
 
         </section>
 
-        ${Footer()}
+       
 
     `;
 

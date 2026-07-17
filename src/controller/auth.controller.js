@@ -1,3 +1,4 @@
+import { geocodeAddress } from "../services/location.service.js";
 import { RegisterView } from "../views/registerView.js";
 import {
     register,
@@ -28,9 +29,11 @@ export function loadRegister() {
 
             phone: inputs[2].value.trim(),
 
-            password: inputs[3].value,
+            address: inputs[3].value.trim(),
 
-            confirmPassword: inputs[4].value
+            password: inputs[4].value,
+
+            confirmPassword: inputs[5].value
 
         };
 
@@ -65,6 +68,19 @@ export function loadRegister() {
             return;
 
         }
+        let location;
+
+        try {
+
+            location = await geocodeAddress(user.address);
+
+        } catch (error) {
+
+            alert("No se pudo encontrar esa dirección. Verifica que esté escrita correctamente.");
+
+            return;
+
+        }
 
         const result = await register({
 
@@ -74,10 +90,15 @@ export function loadRegister() {
 
             phone: user.phone,
 
-            password: user.password
+            password: user.password,
+
+            address: user.address,
+
+            latitude: location.latitude,
+
+            longitude: location.longitude
 
         });
-
         if (result.success) {
 
             alert(result.message);

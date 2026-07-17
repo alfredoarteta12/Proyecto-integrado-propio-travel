@@ -41,16 +41,28 @@ static async loginBusiness(email) {
 }
 
     // Crear negocio
-    static async createBusiness(data) {
+  // Crear negocio
+static async createBusiness(data) {
+
+    const client = await pool.connect();
+
+    try {
+
+        await client.query("BEGIN");
 
         const {
             business_name,
             email,
             phone,
-            password
+            password,
+            address,
+            latitude,
+            longitude
         } = data;
 
-        const query = `
+        // Insertar negocio
+        const businessResult = await client.query(
+            `
             INSERT INTO business (
                 business_name,
                 email,
@@ -59,20 +71,53 @@ static async loginBusiness(email) {
             )
             VALUES ($1, $2, $3, $4)
             RETURNING *;
-        `;
+            `,
+            [
+                business_name,
+                email,
+                phone,
+                password
+            ]
+        );
 
-        const values = [
-            business_name,
-            email,
-            phone,
-            password
-        ];
+        const business = businessResult.rows[0];
 
-        const result = await pool.query(query, values);
+        // Insertar ubicación
+        await client.query(
+            `
+            INSERT INTO location (
+                business_id,
+                address,
+                latitude,
+                longitude
+            )
+            VALUES ($1, $2, $3, $4);
+            `,
+            [
+                business.business_id,
+                address,
+                latitude,
+                longitude
+            ]
+        );
 
-        return result.rows[0];
+        await client.query("COMMIT");
+
+        return business;
+
+    } catch (error) {
+
+        await client.query("ROLLBACK");
+
+        throw error;
+
+    } finally {
+
+        client.release();
+
     }
 
+}
 }
 
 module.exports = Business;

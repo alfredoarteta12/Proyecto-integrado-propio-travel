@@ -1,13 +1,13 @@
 import { HeroSlider } from "../components/HeroSlider.js";
 import { Filter } from "../components/filter.js";
 import { Navbar } from "../components/navbar.js";
+import { Footer } from "../components/footer.js";
 
 export function TouristView() {
 
     return `
 
-            ${Navbar()}      
-
+        ${Navbar()}
 
         <section class="tourist-dashboard">
 
@@ -36,6 +36,8 @@ export function TouristView() {
             </div>
 
         </section>
+
+        ${Footer()}
 
     `;
 

@@ -54,6 +54,12 @@ export function RegisterView() {
                             minlength="10"
                             title="Ingresa un número de WhatsApp de 10 dígitos."
                         >
+                        <input
+                            id="address"
+                            type="text"
+                            placeholder="Dirección del negocio (Ej. Calle 84 #51B-20, Barranquilla)"
+                            required
+                        >
 
                         <input
                             type="password"

@@ -9,7 +9,10 @@ const register = async (req, res) => {
             business_name,
             email,
             phone,
-            password
+            password,
+            address,
+            latitude,
+            longitude
         } = req.body;
 
         // Validar correo
@@ -40,7 +43,10 @@ const register = async (req, res) => {
             business_name,
             email,
             phone,
-            password: hashedPassword
+            password: hashedPassword,
+            address,
+            latitude,
+            longitude
         });
 
         res.status(201).json({

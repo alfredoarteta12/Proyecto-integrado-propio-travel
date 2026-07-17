@@ -22,6 +22,28 @@ export async function loadBusinessView() {
     const app = document.getElementById("app");
 
     app.innerHTML = BusinessView();
+    const business = JSON.parse(localStorage.getItem("business"));
+
+const hour = new Date().getHours();
+
+let greeting = "";
+
+if (hour < 12) {
+
+    greeting = "¡Buenos días";
+
+} else if (hour < 18) {
+
+    greeting = "¡Buenas tardes";
+
+} else {
+
+    greeting = "¡Buenas noches";
+
+}
+
+document.getElementById("greeting").textContent =
+`${greeting}, ${business.business_name}! 👋`;
 
     const logoutButton = document.querySelector(".logout-btn");
 
