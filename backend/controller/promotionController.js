@@ -78,8 +78,83 @@ const getBusinessPromotions = async (req, res) => {
 
 };
 
+// Actualizar promoción
+const updatePromotion = async (req, res) => {
+
+    try {
+
+        const { id } = req.params;
+
+        const promotion = await Promotion.updatePromotion(id, req.body);
+
+        if (!promotion) {
+
+            return res.status(404).json({
+                success: false,
+                message: "Promoción no encontrada."
+            });
+
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Promoción actualizada correctamente.",
+            data: promotion
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        res.status(500).json({
+            success: false,
+            message: "Error al actualizar la promoción."
+        });
+
+    }
+
+};
+
+// Eliminar promoción
+const deletePromotion = async (req, res) => {
+
+    try {
+
+        const { id } = req.params;
+
+        const promotion = await Promotion.deletePromotion(id);
+
+        if (!promotion) {
+
+            return res.status(404).json({
+                success: false,
+                message: "Promoción no encontrada."
+            });
+
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Promoción eliminada correctamente."
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        res.status(500).json({
+            success: false,
+            message: "Error al eliminar la promoción."
+        });
+
+    }
+
+};
+
 module.exports = {
     createPromotion,
     getPromotions,
-    getBusinessPromotions
+    getBusinessPromotions,
+    updatePromotion,
+    deletePromotion
 };

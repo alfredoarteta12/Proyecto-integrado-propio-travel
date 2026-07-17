@@ -59,7 +59,9 @@ export function BusinessView() {
 
                 <section class="promotion-form">
 
-                    <h2>Nueva promoción</h2>
+                   <h2 id="formTitle">
+                        Nueva promoción
+                    </h2>
 
                     <form id="promotionForm">
 
@@ -119,16 +121,14 @@ export function BusinessView() {
                             required
                         >
 
-                        <button
+                       <button
+                            id="submitButton"
                             type="submit"
                             class="save-btn"
                         >
-
                             Guardar promoción
-
-                        </button>
-
-                    </form>
+                     </button>
+                                            </form>
 
                 </section>
 

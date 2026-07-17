@@ -29,3 +29,27 @@ export async function createPromotion(promotion) {
     });
 
 }
+
+// Actualizar promoción
+export async function updatePromotion(id, promotion) {
+
+    return await request(`${API.PROMOTIONS}/${id}`, {
+
+        method: "PUT",
+
+        body: JSON.stringify(promotion)
+
+    });
+
+}
+
+// Eliminar promoción
+export async function deletePromotion(id) {
+
+    return await request(`${API.PROMOTIONS}/${id}`, {
+
+        method: "DELETE"
+
+    });
+
+}

@@ -5,16 +5,32 @@ const router = express.Router();
 const {
     createPromotion,
     getPromotions,
-    getBusinessPromotions
+    getBusinessPromotions,
+    updatePromotion,
+    deletePromotion
 } = require("../controller/promotionController");
 
-// Obtener todas las promociones (Turistas)
+// =======================
+// CONSULTAS
+// =======================
+
+// Todas las promociones (Turistas)
 router.get("/", getPromotions);
 
-// Obtener promociones de un negocio (Dashboard)
+// Promociones del negocio autenticado
 router.get("/business/:id", getBusinessPromotions);
+
+// =======================
+// CRUD
+// =======================
 
 // Crear promoción
 router.post("/", createPromotion);
+
+// Actualizar promoción
+router.put("/:id", updatePromotion);
+
+// Eliminar promoción
+router.delete("/:id", deletePromotion);
 
 module.exports = router;

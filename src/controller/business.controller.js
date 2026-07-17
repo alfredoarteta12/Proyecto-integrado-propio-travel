@@ -9,10 +9,13 @@ import {
 
 import {
     getBusinessPromotions,
-    createPromotion
+    createPromotion,
+    updatePromotion,
+    deletePromotion
 } from "../services/promotion.service.js";
-
 import { navigate } from "../router/router.js";
+
+let editingPromotionId = null;
 
 export async function loadBusinessView() {
 
@@ -32,6 +35,8 @@ export async function loadBusinessView() {
 
     await renderPromotions();
 
+    addCardEvents();
+
     await loadSelects();
 
     loadForm();
@@ -49,12 +54,12 @@ async function renderPromotions() {
     try {
 
         const business = JSON.parse(
-    localStorage.getItem("business")
-);
+            localStorage.getItem("business")
+        );
 
-const response = await getBusinessPromotions(
-    business.business_id
-);
+        const response = await getBusinessPromotions(
+            business.business_id
+        );
 
         if (!response.success) {
 
@@ -169,15 +174,44 @@ function loadForm() {
 
         try {
 
-            const response = await createPromotion(promotion);
+            let response;
+
+            if (editingPromotionId) {
+
+                response = await updatePromotion(
+                    editingPromotionId,
+                    promotion
+                );
+
+            } else {
+
+                response = await createPromotion(
+                    promotion
+                );
+
+            }
 
             if (response.success) {
 
-                alert("Promoción creada correctamente.");
+                alert(
+                    editingPromotionId
+                        ? "Promoción actualizada correctamente."
+                        : "Promoción creada correctamente."
+                );
 
                 form.reset();
 
+                editingPromotionId = null;
+
+                document.getElementById("formTitle").textContent =
+                    "Nueva promoción";
+
+                document.getElementById("submitButton").textContent =
+                    "Guardar promoción";
+
                 await renderPromotions();
+
+                addCardEvents();
 
             } else {
 
@@ -189,10 +223,112 @@ function loadForm() {
 
             console.error(error);
 
-            alert("Error al crear la promoción.");
+            alert("Error al guardar la promoción.");
 
         }
 
     });
+
+}
+function addCardEvents() {
+
+    const editButtons =
+        document.querySelectorAll(".edit-btn");
+
+    const deleteButtons =
+        document.querySelectorAll(".delete-btn");
+
+    editButtons.forEach(button => {
+
+    button.addEventListener("click", async () => {
+
+        const id = Number(button.dataset.id);
+
+        const business = JSON.parse(
+            localStorage.getItem("business")
+        );
+
+        const response = await getBusinessPromotions(
+            business.business_id
+        );
+
+        const promotion = response.data.find(
+            p => p.promotion_id === id
+        );
+
+        if (!promotion) return;
+
+        editingPromotionId = id;
+        console.log("Entró a editar", id);
+
+        document.getElementById("title").value =
+            promotion.title;
+
+        document.getElementById("description").value =
+            promotion.description;
+
+        document.getElementById("price").value =
+            promotion.price;
+
+        document.getElementById("activitySelect").value =
+            promotion.activity_id;
+
+        document.getElementById("journeySelect").value =
+            promotion.journey_id;
+
+        document.getElementById("groupTypeSelect").value =
+            promotion.group_type_id;
+
+        document.getElementById("image").value =
+            promotion.image;
+
+        document.getElementById("formTitle").textContent =
+            "Editar promoción";
+
+        document.getElementById("submitButton").textContent =
+            "Actualizar promoción";
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    });
+
+});
+
+  deleteButtons.forEach(button => {
+
+    button.addEventListener("click", async () => {
+
+        const confirmDelete = confirm(
+            "¿Deseas eliminar esta promoción?"
+        );
+
+        if (!confirmDelete) return;
+
+        try {
+
+            const response = await deletePromotion(
+                button.dataset.id
+            );
+
+            alert(response.message);
+
+            await renderPromotions();
+
+            addCardEvents();
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert("No se pudo eliminar la promoción.");
+
+        }
+
+    });
+
+});
 
 }

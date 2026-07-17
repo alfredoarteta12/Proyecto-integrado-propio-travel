@@ -2,19 +2,20 @@ export function PlaceCard(promotion) {
 
     return `
 
-        <article class="place-card" data-id="${promotion.id}">
-                        <img
-                    src="${promotion.image}"
-                    alt="${promotion.title}"
-                    class="card-image"
-                />
+        <article class="place-card" data-id="${promotion.promotion_id}">
+
+            <img
+                src="${promotion.image}"
+                alt="${promotion.title}"
+                class="card-image"
+            />
 
             <div class="card-header">
 
                 <h3>${promotion.title}</h3>
 
                 <span class="price">
-                    $${promotion.price.toLocaleString("es-CO")}
+                    $${Number(promotion.price).toLocaleString("es-CO")}
                 </span>
 
             </div>
@@ -26,18 +27,18 @@ export function PlaceCard(promotion) {
             <div class="card-info">
 
                 <span class="badge schedule">
-                    🕒 ${translateSchedule(promotion.schedule)}
+                    🕒 ${promotion.journey_name}
                 </span>
 
                 <span class="badge audience">
-                    👥 ${translateAudience(promotion.audience)}
+                    👥 ${promotion.group_name}
                 </span>
 
             </div>
 
             <div class="card-footer">
 
-                <a href="${promotion.whatsapp}" target="_blank">
+                <a href="${promotion.whatsapp || "#"}" target="_blank">
 
                     Reservar por WhatsApp
 
@@ -48,39 +49,5 @@ export function PlaceCard(promotion) {
         </article>
 
     `;
-
-}
-
-function translateSchedule(schedule){
-
-    switch(schedule){
-
-        case "morning":
-            return "Mañana";
-
-        case "night":
-            return "Noche";
-
-        default:
-            return schedule;
-
-    }
-
-}
-
-function translateAudience(audience){
-
-    switch(audience){
-
-        case "family":
-            return "Familiar";
-
-        case "adults":
-            return "Adultos";
-
-        default:
-            return audience;
-
-    }
 
 }

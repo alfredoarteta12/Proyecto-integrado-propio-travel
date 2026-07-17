@@ -17,19 +17,17 @@ setTimeout(() => {
     initializeMap();
 
 }, 50);
-    const scheduleFilter = document.getElementById("scheduleFilter");
-    const audienceFilter = document.getElementById("audienceFilter");
 
-scheduleFilter.addEventListener("change", updateFilters);
-audienceFilter.addEventListener("change", updateFilters);
 
-    const promotions = await getPromotions();
+    const response = await getPromotions();
 
-    const container = document.getElementById("promotionsContainer");
+const promotions = response.data;
 
-   refreshView(promotions, container);
-   setupFilters(promotions, container);
+const container = document.getElementById("promotionsContainer");
 
+refreshView(promotions, container);
+
+setupFilters(promotions, container);
 }
 
 function renderPromotions(promotions, container) {
@@ -129,8 +127,3 @@ function applyFilters(promotions) {
 
 }
 
-function updateFilters() {
-
-    console.log("Filtro cambiado");
-
-}

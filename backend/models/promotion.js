@@ -140,6 +140,65 @@ class Promotion {
 
     }
 
+    // Actualizar promoción
+    static async updatePromotion(id, data) {
+
+        const {
+            activity_id,
+            journey_id,
+            group_type_id,
+            title,
+            description,
+            price,
+            image
+        } = data;
+
+        const query = `
+            UPDATE promotion
+            SET
+                activity_id = $1,
+                journey_id = $2,
+                group_type_id = $3,
+                title = $4,
+                description = $5,
+                price = $6,
+                image = $7
+            WHERE promotion_id = $8
+            RETURNING *;
+        `;
+
+        const values = [
+            activity_id,
+            journey_id,
+            group_type_id,
+            title,
+            description,
+            price,
+            image,
+            id
+        ];
+
+        const result = await pool.query(query, values);
+
+        return result.rows[0];
+
+    }
+
+    // Eliminar promoción
+    static async deletePromotion(id) {
+
+        const query = `
+            DELETE FROM promotion
+            WHERE promotion_id = $1
+            RETURNING *;
+        `;
+
+        const result = await pool.query(query, [id]);
+
+        return result.rows[0];
+
+    }
+
 }
 
 module.exports = Promotion;
