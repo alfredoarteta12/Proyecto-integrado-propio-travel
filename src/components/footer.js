@@ -33,13 +33,14 @@ export function Footer() {
 
             <div class="footer-social">
 
-                <a href="#" title="Facebook"></a>
+                <a href="" title="Facebook"><img src="public/images/facebook.png"alt="Facebook" width="30" height="30"></a>
 
-                <a href="#" title="Instagram"></a>
 
-                <a href="#" title="TikTok"></a>
+                <a href="" title="Instagram"><img src="public/images/Instagram.png"alt="Instagram" width="30" height="30"></a>
 
-                <a href="#" title="WhatsApp"></a>
+                <a href="" title="TikTok"><img src="public/images/tik-tok.png"alt="TikTok" width="30" height="30"></a>
+
+                <a href="" title="WhatsApp"><img src="public/images/WhatsApp.png"alt="WhatsApp" width="30" height="30"></a>
 
             </div>
 
