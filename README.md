@@ -117,16 +117,16 @@ backend/.env
 Con las variables de entorno correspondientes:
 
 ```env
-PORT=3000
+POSTGRES_VERSION=18
 
-DB_HOST=localhost
-DB_PORT=5432
-DB_USER=postgres
-DB_PASSWORD=TU_PASSWORD
-DB_NAME=el_propio_travel
+POSTGRES_CONTAINER_NAME=riwi_db_local
 
-JWT_SECRET=tu_clave_secreta
-```
+POSTGRES_DB=el_propio_travel
+POSTGRES_USER=magdalena
+POSTGRES_PASSWORD=123456
+
+POSTGRES_PORT=5432
+POSTGRES_VOLUME_NAME=riwi-db-data-magdalena
 
 ---
 
